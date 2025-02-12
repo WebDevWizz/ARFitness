@@ -14,7 +14,7 @@ struct ExerciseInfoView: View {
     
     var body: some View{
         VStack{
-            VStack(spacing: 16) {
+            VStack(spacing: 25) {
                     Text(exercise.name)
                         .font(.title)
                         .bold()
@@ -22,7 +22,7 @@ struct ExerciseInfoView: View {
                     Text(exercise.description)
                         .multilineTextAlignment(.center)
                         
-                    HStack(spacing: 32) {
+                    HStack(spacing: 35) {
                         VStack {
                             Text("\(exercise.sets)")
                                 .font(.title2)
