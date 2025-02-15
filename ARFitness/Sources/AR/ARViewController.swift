@@ -15,7 +15,9 @@ import ARKit
 
 class ARViewController: UIViewController, ARSessionDelegate {
     var arView: ARView!
-    var selectedTool: ModelEntity? //Keep track of gym tool
+    //var selectedTool: ModelEntity? //Keep track of gym tool
+    //Ora mi serve in realtà l'insieme di attrezzi:
+    private var equipmentsEntities: [UUID: (entity: ModelEntity, equipment: GymEquipment)] = [:]
     
     /* STANDARD FUNCTIONS FOR THE AR AMBIENT*/
     //View Initialization
@@ -30,7 +32,7 @@ class ARViewController: UIViewController, ARSessionDelegate {
         setupGestures()
     }
     
-    //Setup AR session:
+    //MARK: Setup AR session:
     private func setupAR() {
         let config = ARWorldTrackingConfiguration()
         config.planeDetection = [.horizontal] // Recognizes horizontal surfaces (ex: table, floor)
@@ -47,7 +49,7 @@ class ARViewController: UIViewController, ARSessionDelegate {
         arView.addGestureRecognizer(tap)
     }
     
-    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+    /*@objc func handleTap(_ gesture: UITapGestureRecognizer) {
         //Take the tap position
         let location = gesture.location(in: arView)
         
@@ -58,6 +60,16 @@ class ARViewController: UIViewController, ARSessionDelegate {
         } else {
             placeTool(at: location)
         }
+    }*/
+    
+    //MARK: New HandleTap function:
+    @objc func handleTap(_gesture: UIGestureRecognizer) {
+        let location = gesture.location(in: arView)
+        
+        //Define gesture:
+        //If user tap an existing equip.:
+        if let entity = arView.entity(at: location) as? ModelEntity,
+           
     }
     
     private func placeTool(at location: CGPoint) {

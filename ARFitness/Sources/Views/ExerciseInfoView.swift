@@ -10,12 +10,12 @@
 import SwiftUI
 
 struct ExerciseInfoView: View {
-    let exercise: ExerciseInfo
+    let equipment: GymEquipment
     
     var body: some View{
         VStack{
             VStack(spacing: 25) {
-                    Text(exercise.name)
+                    Text(equipment.name)
                         .font(.title)
                         .bold()
                         
@@ -24,13 +24,13 @@ struct ExerciseInfoView: View {
                         
                     HStack(spacing: 35) {
                         VStack {
-                            Text("\(exercise.sets)")
+                            Text("\(equipment.sets)")
                                 .font(.title2)
                                 Text("Serie")
                             }
                             
                         VStack {
-                            Text("\(exercise.reps)")
+                            Text("\(equipment.reps)")
                                 .font(.title2)
                             Text("Ripetizioni")
                         }
@@ -45,5 +45,5 @@ struct ExerciseInfoView: View {
 }
 
 #Preview {
-    ExerciseInfoView(exercise: ExerciseInfo(name: "Panca Piana", description: "Esercizio per il petto", category: "Petto", sets: 3, reps: 10))
+    ExerciseInfoView(equipment: ExerciseInfo(name: "Panca Piana", description: "Esercizio per il petto", category: "Petto", sets: 3, reps: 10))
 }

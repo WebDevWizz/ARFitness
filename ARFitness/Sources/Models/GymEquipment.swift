@@ -28,6 +28,21 @@ enum EquipmentType{
     
     //MARK: 3D GEOMETRY FOR EVERY TYPE OF GYM'S EQUIPMENT
     func createEntity() -> ModelEntity {
+        let mesh: MeshResource
+        let material = SimpleMaterial(color: .gray, isMetallic: true)
         
+        //MARK: Using a Switch for every equipment:
+        switch self {
+        case .dumbbell:
+            mesh = MeshResource.generateBox(size: 0.2)
+            
+        case .kettlebell:
+            mesh = MeshResource.generateSphere(radius: 0.15)
+        
+        case .resistanceBand:
+            mesh = MeshResource.generateBox(size: [0.3, 0.05, 0.05])
+        }
+        
+        return ModelEntity(mesh: mesh, materials: [material])
     }
 }
