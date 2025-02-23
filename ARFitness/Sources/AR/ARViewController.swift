@@ -17,7 +17,7 @@ class ARViewController: UIViewController, ARSessionDelegate {
     var arView: ARView!
     //var selectedTool: ModelEntity? //Keep track of gym tool
     //Ora mi serve in realtà l'insieme di attrezzi:
-    private var equipmentsEntities: [UUID: (entity: ModelEntity, equipment: GymEquipment)] = [:]
+    private var equipmentEntities: [UUID: (entity: ModelEntity, equipment: GymEquipment)] = [:]
     
     /* STANDARD FUNCTIONS FOR THE AR AMBIENT*/
     //View Initialization
@@ -63,16 +63,41 @@ class ARViewController: UIViewController, ARSessionDelegate {
     }*/
     
     //MARK: New HandleTap function:
-    @objc func handleTap(_gesture: UIGestureRecognizer) {
+    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: arView)
         
         //Define gesture:
         //If user tap an existing equip.:
         if let entity = arView.entity(at: location) as? ModelEntity,
-           
+           let equipmentInfo = equipmentEntities.first(where: { $0.value.entity == entity}) {
+            showExerciseInfo(for: equipmentInfo.value.equipment)
+           } else {
+               //User is tapping a surface => show the selector to choose a gym equip:
+               showEquipmentSelector(at: location)
+           }
     }
     
-    private func placeTool(at location: CGPoint) {
+    
+    
+    private func showEquipmentSelector(at position: CGPoint) {
+        let selectionView = UIHostingController(
+                rootView: EquipmentSelectionView(position: position) { [weak self] equipment in
+                        self?.placeEquipment(equipment, at: position)
+                }
+        )
+        
+        selectionView.modalPresentationStyle = .popover
+        selectionView.preferredContentSize = CGSizeMake(300, 400)
+        
+        //Logic:
+        if let popover = selectionView.popoverPresentationController {
+            popover.sourceView = arView
+            popover.sourceRect = CGRect(origin: position, size: .zero)
+        }
+        
+        present(selectionView, animated: true)
+    }
+    /* private func placeTool(at location: CGPoint) {
         //Use raycast to find the point where place the tool:
         guard let raycastResult = arView.raycast(from: location, allowing: .estimatedPlane, alignment: .horizontal).first
             
@@ -91,19 +116,26 @@ class ARViewController: UIViewController, ARSessionDelegate {
         arView.scene.addAnchor(anchor)
         
         selectedTool = tool
-    }
+    }*/
     
     
-    private func showExerciseInfo() {
-        let exercise = ExerciseInfo(name: "Curl con manubri", description: "Esercizio efficace per i bicipiti. Mantieni la schiena dritta e i gomiti vicino al corpo", category: "Bicipiti", sets: 3, reps: 12)
+    
+    
+    
+    //A function that shows the info about an exercise after user tap on it
+    private func showExerciseInfo(for equipment: GymEquipment) {
+        let infoView = UIHostingController(
+            rootView: ExerciseInfoView(equipment: equipment).frame(width: 300))
         
-        let infoView = UIHostingController(rootView: ExerciseInfoView(exercise: exercise).frame(width: 300))
-        
-        infoView.modalPresentationStyle = UIModalPresentationStyle.popover
+        infoView.modalPresentationStyle = .popover
         infoView.popoverPresentationController?.sourceView = arView
-        infoView.popoverPresentationController?.sourceRect = CGRect(x: arView.center.x, y: arView.center.y,                    width: 0, height: 0)
+        infoView.popoverPresentationController?.sourceRect = CGRect(
+            x: arView.center.x,
+            y: arView.center.y,
+            width: 0,
+            height: 0
+        )
         
-        //Animazione del pop-up:
         present(infoView, animated: true)
     }
 }
