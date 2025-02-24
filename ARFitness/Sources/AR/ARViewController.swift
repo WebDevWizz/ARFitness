@@ -78,6 +78,24 @@ class ARViewController: UIViewController, ARSessionDelegate {
     }
     
     
+    //MARK: FUNCTION TO PLACE THE VIRTUAL EQUIPMENT IN THE AR VIEW:
+    private func placeEquipment(_ equipment: GymEquipment, at location: CGPoint)
+    {
+        //Raycast to find the position:
+        guard let raycastResult = arView.raycast(from: location, allowing: .estimatedPlane, alignment: .horizontal).first else { return }
+        
+        //MARK: entity + anchor + adding entity and anchor to the scene
+        let entity = equipment.modelType.createEntity()
+        let anchor = AnchorEntity(world: raycastResult.worldTransform)
+        anchor.addChild(entity)
+        arView.scene.addAnchor(anchor)
+        
+        //Save
+        equipmentEntities[equipment.id] = (entity, equipment)
+    }
+    
+    
+    
     
     private func showEquipmentSelector(at position: CGPoint) {
         let selectionView = UIHostingController(
