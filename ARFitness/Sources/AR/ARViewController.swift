@@ -140,19 +140,31 @@ class ARViewController: UIViewController, ARSessionDelegate {
     
     
     
-    //A function that shows the info about an exercise after user tap on it
+    //MARK: A function that shows the info about an exercise after user tap on it
     private func showExerciseInfo(for equipment: GymEquipment) {
         let infoView = UIHostingController(
             rootView: ExerciseInfoView(equipment: equipment).frame(width: 300))
         
         infoView.modalPresentationStyle = .popover
-        infoView.popoverPresentationController?.sourceView = arView
+       /* infoView.popoverPresentationController?.sourceView = arView
         infoView.popoverPresentationController?.sourceRect = CGRect(
             x: arView.center.x,
             y: arView.center.y,
             width: 0,
             height: 0
-        )
+        )*/
+        
+        
+        //New logic: before it doesn't show exercise info when user taps on a gym equip. Now, I set sourceRect with the tap's position (and not at center).
+        if let popover = infoView.popoverPresentationController {
+            popover.sourceView = arView
+            popover.sourceRect = CGRect(
+                x: arView.bounds.midX, //Posizione più affidabile
+                y: arView.bounds.midY,
+                width: 1,
+                height: 1
+            )
+        }
         
         present(infoView, animated: true)
     }

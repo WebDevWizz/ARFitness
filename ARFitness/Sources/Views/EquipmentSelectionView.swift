@@ -12,11 +12,36 @@
 import SwiftUI
 
 struct EquipmentSelectionView: View {
+    let position: CGPoint
+    let onSelect: (GymEquipment) -> Void
+    @Environment(\.dismiss) private var dismiss
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            //MARK: List of gym equipments
+            List(EquipmentCatalog.shared.equipment) { equipment in
+                Button(action: {
+                    onSelect(equipment)
+                    dismiss()
+                }) {
+                    HStack {
+                        Text(equipment.name)
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.blue)
+                    }
+                }
+            }
+            .navigationTitle("Seleziona un attrezzo")
+        }
     }
 }
 
 #Preview {
-    EquipmentSelectionView()
+    EquipmentSelectionView(
+        position: CGPoint(x: 100, y: 100), //Default values
+        onSelect: { _ in } // Closure of test
+    )
 }

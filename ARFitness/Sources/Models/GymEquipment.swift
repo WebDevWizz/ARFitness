@@ -31,7 +31,7 @@ enum EquipmentType{
         let mesh: MeshResource
         let material = SimpleMaterial(color: .gray, isMetallic: true)
         
-        //MARK: Using a Switch for every equipment:
+        //MARK: Using a Switch for every equipment: CUSTOM FORMS
         switch self {
         case .dumbbell:
             mesh = MeshResource.generateBox(size: 0.2)
