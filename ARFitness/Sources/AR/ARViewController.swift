@@ -86,6 +86,8 @@ class ARViewController: UIViewController, ARSessionDelegate {
         
         //MARK: entity + anchor + adding entity and anchor to the scene
         let entity = equipment.modelType.createEntity()
+        //MARK: Aggiunta collisioni per il tap:
+        entity.generateCollisionShapes(recursive: true)
         let anchor = AnchorEntity(world: raycastResult.worldTransform)
         anchor.addChild(entity)
         arView.scene.addAnchor(anchor)
@@ -164,6 +166,7 @@ class ARViewController: UIViewController, ARSessionDelegate {
                 width: 1,
                 height: 1
             )
+            popover.permittedArrowDirections = .any // Mostra la freccia nel popover
         }
         
         present(infoView, animated: true)

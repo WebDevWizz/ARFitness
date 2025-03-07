@@ -15,7 +15,7 @@ class EquipmentCatalog {
     let equipment: [GymEquipment] = [
         GymEquipment(name: "Manubrio 5kg", description: "Perfetto per curl bicipiti e shoulder press. Mantieni la schiena dritta durante l'esecuzione.", sets: 3, reps: 12, modelType: .dumbbell),
         
-        GymEquipment(name: "Kettlebell 8kg", description: "Ideale per swing e goblet squat. Mantieni il core attivo durante il movimento.", sets: 4, reps: 15, modelType: .kettlebell),
+        GymEquipment(name: "Kettlebell 8kg", description: "La kettlebell da 8 kg è un attrezzo per l'allenamento funzionale e di forza, ampiamente utilizzato in diverse discipline fitness come il cross-training, il functional training e il kettlebell sport. Ideale per swing e goblet squat. Mantieni il core attivo durante il movimento.", sets: 4, reps: 15, modelType: .kettlebell),
         
         GymEquipment(name: "Elastico", description: "Ottimo per esercizi di mobilità e riscaldamento. Controlla il movimento in entrambe le direzioni.", sets: 3, reps: 20, modelType: .resistanceBand)
     ]
