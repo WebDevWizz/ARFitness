@@ -143,18 +143,11 @@ class ARViewController: UIViewController, ARSessionDelegate {
     
     
     //MARK: A function that shows the info about an exercise after user tap on it
-    private func showExerciseInfo(for equipment: GymEquipment) {
+    /*private func showExerciseInfo(for equipment: GymEquipment) {
         let infoView = UIHostingController(
             rootView: ExerciseInfoView(equipment: equipment).frame(width: 300))
         
         infoView.modalPresentationStyle = .popover
-       /* infoView.popoverPresentationController?.sourceView = arView
-        infoView.popoverPresentationController?.sourceRect = CGRect(
-            x: arView.center.x,
-            y: arView.center.y,
-            width: 0,
-            height: 0
-        )*/
         
         
         //New logic: before it doesn't show exercise info when user taps on a gym equip. Now, I set sourceRect with the tap's position (and not at center).
@@ -167,8 +160,43 @@ class ARViewController: UIViewController, ARSessionDelegate {
                 height: 1
             )
             popover.permittedArrowDirections = .any // Mostra la freccia nel popover
+            
+            // Aggiungi delegato per controllare meglio la presentazione
+            popover.delegate = self
         }
         
         present(infoView, animated: true)
+    }*/
+    
+    private func showExerciseInfo(for equipment: GymEquipment) {
+        // Rimuovi la larghezza fissa di 300
+        let infoView = UIHostingController(
+            rootView: ExerciseInfoView(equipment: equipment))
+        
+        // Imposta dimensioni preferite che si adattino meglio al contenuto
+        infoView.modalPresentationStyle = .popover
+        infoView.preferredContentSize = CGSize(width: 350, height: 400) // Dimensioni adeguate per il contenuto
+        
+        if let popover = infoView.popoverPresentationController {
+            popover.sourceView = arView
+            popover.sourceRect = CGRect(
+                x: arView.bounds.midX,
+                y: arView.bounds.midY,
+                width: 1,
+                height: 1
+            )
+            popover.permittedArrowDirections = .any
+            
+            // Aggiungi delegato per controllare meglio la presentazione
+            popover.delegate = self
+        }
+        
+        present(infoView, animated: true)
+    }
+}
+
+extension ARViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none // Forza il popover a rimanere un popover anche su iPhone
     }
 }
