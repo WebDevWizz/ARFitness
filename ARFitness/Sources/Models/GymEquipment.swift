@@ -18,11 +18,27 @@ struct GymEquipment: Identifiable {
     let modelType: EquipmentType
 }
 
+extension GymEquipment { //In modo da associare ogni attrezzo ad una specifica categoria (MARK: DA AGGIORNARE OGNI VOLTA!)
+    var category: String {
+        switch modelType {
+        case .dumbbell:
+            return "Manubri"
+        case .kettlebell:
+            return "Kettlebell"
+        case .resistanceBand:
+            return "Fasce di resistenza"
+        case .bilanciere:
+            return "Bilanciere"
+        }
+    }
+}
+
 
 enum EquipmentType{
     case dumbbell
     case kettlebell
     case resistanceBand
+    case bilanciere //MARK: DA AGGIUNGERE LA CREAZIONE DELL'OGGETTO VIRTUALE (elimina questo Mark quando l'hai fatto 🚨)
     
     //MARK: Add here other types...
     
@@ -41,6 +57,9 @@ enum EquipmentType{
         
         case .resistanceBand:
             mesh = MeshResource.generateBox(size: [0.3, 0.05, 0.05])
+        
+        case .bilanciere:
+            mesh = MeshResource.generateBox(size: [0.5, 0.07, 0.06])
         }
         
         return ModelEntity(mesh: mesh, materials: [material])
