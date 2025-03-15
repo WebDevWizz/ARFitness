@@ -21,14 +21,26 @@ struct GymEquipment: Identifiable {
 extension GymEquipment { //In modo da associare ogni attrezzo ad una specifica categoria (MARK: DA AGGIORNARE OGNI VOLTA!)
     var category: String {
         switch modelType {
-        case .dumbbell:
-            return "Manubri"
-        case .kettlebell:
-            return "Kettlebell"
-        case .resistanceBand:
-            return "Fasce di resistenza"
-        case .bilanciere:
-            return "Bilanciere"
+            case .dumbbell:
+                return "Strength Equipment"
+            case .kettlebell:
+                return "Strength Equipment"
+            case .resistanceBand:
+                return "Fasce di resistenza"
+            case .bilanciere:
+                return "Strength Equipment"
+            case .tapisRoulant:
+                return "Cardio"
+            case .exerciseBike:
+                return "Cardio"
+            case .elliptical:
+                return "Cardio"
+            case .rower:
+                return "Cardio"
+            case .stepper:
+                return "Cardio"
+            case .spinBike:
+                return "Cardio"
         }
     }
 }
@@ -39,6 +51,12 @@ enum EquipmentType{
     case kettlebell
     case resistanceBand
     case bilanciere //MARK: DA AGGIUNGERE LA CREAZIONE DELL'OGGETTO VIRTUALE (elimina questo Mark quando l'hai fatto 🚨)
+    case tapisRoulant
+    case exerciseBike
+    case elliptical
+    case rower
+    case stepper
+    case spinBike
     
     //MARK: Add here other types...
     
@@ -60,6 +78,24 @@ enum EquipmentType{
         
         case .bilanciere:
             mesh = MeshResource.generateBox(size: [0.5, 0.07, 0.06])
+            
+        case .tapisRoulant:
+            mesh = MeshResource.generateBox(size: [0.9, 0.02, 0.06])
+        
+        case .exerciseBike:
+            mesh = MeshResource.generateBox(size: [0.9, 0.02, 0.06])
+        
+        case .elliptical:
+            mesh = MeshResource.generateBox(size: [0.9, 0.02, 0.06])
+        
+        case .rower:
+            mesh = MeshResource.generateBox(size: [0.9, 0.02, 0.06])
+        
+        case .stepper:
+            mesh = MeshResource.generateBox(size: [0.9, 0.02, 0.06])
+            
+        case .spinBike:
+            mesh = MeshResource.generateBox(size: [0.9, 0.02, 0.06])
         }
         
         return ModelEntity(mesh: mesh, materials: [material])

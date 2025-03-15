@@ -26,6 +26,8 @@ struct EquipmentSelectionView: View {
             return myData.equipment
                 .filter { equip in
                     equip.name.localizedCaseInsensitiveContains(search)
+                    
+                    //TODO: implementare anche la ricerca per categoria
                 }
                 .sorted(by: sortByCategory)
         }
